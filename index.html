@@ -2,17 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Cat Clicker</title>
+    <title>Laney's Cat Clicker</title>
 </head>
 <body>
-    <ul id="cat-list"></ul>
-    <div id="cat">
+  <ul data-bind="foreach: catList">
+    <li data-bind="text: name, click: $parent.setCat"></li>
+  </ul>
 
-        <h2 id="cat-name"></h2>
-        <div id="cat-count"></div>
-        <img id="cat-img" src="" alt="cute cat">
+  <div data-bind="with:currentCat"> <!-- sets binding context so all data-binds inside this div will be relative to current cat (as opposed to currentCat().name, for example)-->
+
+        <h2 data-bind="text: name" id="cat-name"></h2>
+        <h3 data-bind="text: title"></h3>
+        <div data-bind="text: clickCount" id="cat-count"></div>
+        <img data-bind="click: $parent.incrementCounter, attr: {src: imgSrc}" id="cat-img" src="" alt="cute cat"> <!-- add $parent so it is run on the ViewModel binding context (scope), not currentCat -->
+        <div>
+          <h3>Nicknames:</h3>
+          <ul data-bind="foreach: nicknames">
+            <li data-bind="text: $data"></li>
+          </ul>
+        </div>
 
     </div>
+
     <script src="js/lib/knockout-3.2.0.js"></script>
     <script src="js/app.js"></script>
 </body>
